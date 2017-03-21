@@ -88,11 +88,12 @@ public class ExcelStringBuilder {
     }
 
     private String wrapExcel(String content){
-        if(content.startsWith("Excel:")){
-            String type = content.substring(6,content.length());
+        String prefix = "**";
+        if(content.startsWith(prefix)){
+            String type = content.substring(prefix.length(),content.length());
             switch (type){
                 case "newline":
-                    return "\n";
+                    return Character.toString((char)13) + Character.toString((char)10);
             }
         }
         return content;

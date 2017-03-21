@@ -26,8 +26,8 @@ public class LayoutSetup {
 
         builder.setGridY(0);
         JTextField leftFieldCol1 = new JTextField();
-        leftFieldCol1.setText("Label:");
-        leftFieldCol1.setEditable(false);
+        leftFieldCol1.setText("Label: ");
+        leftFieldCol1.setEditable(true);
         jpanel.add(leftFieldCol1,builder.setGridX(0).setWeightX(0).getGridBagConstraints());
 
         JTextField centerFieldCol1 = new JTextField();
@@ -35,14 +35,14 @@ public class LayoutSetup {
         jpanel.add(centerFieldCol1,builder.setGridX(1).setWeightX(2).getGridBagConstraints());
 
         JTextField rightFieldCol1 = new JTextField();
-        rightFieldCol1.setText("Excel:newline");
-        rightFieldCol1.setEditable(false);
+        rightFieldCol1.setText("**newline");
+        rightFieldCol1.setEditable(true);
         jpanel.add(rightFieldCol1,builder.setGridX(2).setWeightX(0).getGridBagConstraints());
 
         builder.setGridY(1);
         JTextField leftFieldCol2 = new JTextField();
-        leftFieldCol2.setText("Default status:");
-        leftFieldCol2.setEditable(false);
+        leftFieldCol2.setText("Default status: ");
+        leftFieldCol2.setEditable(true);
         jpanel.add(leftFieldCol2,builder.setGridX(0).setWeightX(0).getGridBagConstraints());
 
 
@@ -51,14 +51,14 @@ public class LayoutSetup {
         jpanel.add(centerFieldCol2,builder.setGridX(1).setWeightX(2).getGridBagConstraints());
 
         JTextField rightFieldCol2 = new JTextField();
-        rightFieldCol2.setText("Excel:newline");
-        rightFieldCol2.setEditable(false);
+        rightFieldCol2.setText("**newline");
+        rightFieldCol2.setEditable(true);
         jpanel.add(rightFieldCol2,builder.setGridX(2).setWeightX(0).getGridBagConstraints());
 
         builder.setGridY(2);
         JTextField leftFieldCol3 = new JTextField();
-        leftFieldCol3.setText("Default value:");
-        leftFieldCol3.setEditable(false);
+        leftFieldCol3.setText("Default value: ");
+        leftFieldCol3.setEditable(true);
         jpanel.add(leftFieldCol3,builder.setGridX(0).setWeightX(0).getGridBagConstraints());
 
 
@@ -67,14 +67,14 @@ public class LayoutSetup {
         jpanel.add(centerFieldCol3,builder.setGridX(1).setWeightX(2).getGridBagConstraints());
 
         JTextField rightFieldCol3 = new JTextField();
-        rightFieldCol3.setText("Excel:newline");
-        rightFieldCol3.setEditable(false);
+        rightFieldCol3.setText("**newline");
+        rightFieldCol3.setEditable(true);
         jpanel.add(rightFieldCol3,builder.setGridX(2).setWeightX(0).getGridBagConstraints());
 
         builder.setGridY(3);
         JTextField leftFieldCol4 = new JTextField();
-        leftFieldCol4.setText("Required field:");
-        leftFieldCol4.setEditable(false);
+        leftFieldCol4.setText("Required field: ");
+        leftFieldCol4.setEditable(true);
         jpanel.add(leftFieldCol4,builder.setGridX(0).setWeightX(0).getGridBagConstraints());
 
 
@@ -83,7 +83,7 @@ public class LayoutSetup {
         jpanel.add(centerFieldCol4,builder.setGridX(1).setWeightX(2).getGridBagConstraints());
 
 //        JTextField rightFieldCol4 = new JTextField();
-//        rightFieldCol4.setText("Excel:newline");
+//        rightFieldCol4.setText("**newline");
 //        rightFieldCol4.setEditable(false);
 //        jpanel.add(rightFieldCol4,builder.setGridX(2).setWeightX(0).getGridBagConstraints());
 
