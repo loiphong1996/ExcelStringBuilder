@@ -1,0 +1,20 @@
+<GUI>
+    <Line>
+        <Label>Default: </Label>
+        <Input/>
+        <Label>%</Label>
+        <Label>**Newline</Label>
+    </Line>
+    <Line>
+        <Label>SQL: </Label>
+        <Input/>
+        <Label> where </Label>
+        <Input/>
+        <Label>**Newline</Label>
+    </Line>
+    <Line>
+        <Label>Default values: </Label>
+        <Label>**Newline</Label>
+        <TextArea LinePrefix="**Tab" LinePostfix="pf"></TextArea>
+    </Line>
+</GUI>

@@ -6,8 +6,10 @@
         <element id="module-output" name="ExcelStringBuilder" />
       </element>
       <element id="directory" name="libs">
-        <element id="library" level="project" name="gson-2.8.0" />
         <element id="library" level="project" name="commons-io-2.5" />
+      </element>
+      <element id="directory" name="pattern">
+        <element id="dir-copy" path="$PROJECT_DIR$/pattern" />
       </element>
     </root>
   </artifact>
