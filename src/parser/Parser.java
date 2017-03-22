@@ -2,7 +2,8 @@ package parser;
 
 
 import com.sun.corba.se.impl.io.TypeMismatchException;
-import component.MultilineText;
+import component.BorderedLabel;
+import component.TextArea;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -14,12 +15,16 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  * Created by Phong on 3/21/2017.
  */
 public class Parser {
     private static Parser parser;
+
+    private Parser() {
+    }
 
     public static Parser getInstance() {
         if (parser == null) {
@@ -28,10 +33,7 @@ public class Parser {
         return parser;
     }
 
-    private Parser() {
-    }
-
-    public static GUIPackage parse(File xmlFile) throws IOException, ParserConfigurationException, SAXException {
+    public static GUIPackage parse(File xmlFile) throws Exception {
         Parser parser = Parser.getInstance();
         GUIPackage guiPackage = new GUIPackage();
         Document document = parser.readXMLFile(xmlFile);
@@ -62,7 +64,7 @@ public class Parser {
         return doc;
     }
 
-    private JComponent parseComponent(Node node) {
+    private JComponent parseComponent(Node node) throws Exception {
         String type = node.getNodeName();
         JComponent jComponent;
 
@@ -86,7 +88,7 @@ public class Parser {
 
     private JComponent parseLabel(Node node) {
         String labelText = node.getTextContent();
-        JLabel jLabel = new JLabel(labelText,SwingConstants.CENTER);
+        BorderedLabel jLabel = new BorderedLabel(labelText, SwingConstants.CENTER);
         return jLabel;
     }
 
@@ -96,11 +98,30 @@ public class Parser {
     }
 
     private JComponent parseTextArea(Node node) {
-        String defaultText = node.getTextContent();
-        Element element = (Element) node;
-        String prefix = element.getAttribute("LinePrefix");
-        String postfix = element.getAttribute("LinePostfix");
-        return new MultilineText(defaultText,prefix,postfix);
+        LinkedList<TextArea.LineElement> lineElements = new LinkedList<>();
+
+        for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+            Node subNode = node.getChildNodes().item(i);
+            if (subNode.getNodeType() == Node.ELEMENT_NODE) {
+                TextArea.LineElementType lineElementType = TextArea.generateLineElementType(subNode);
+                String[] values;
+                switch (lineElementType) {
+                    case Sub:
+                        values = new String[]{subNode.getTextContent()};
+                        lineElements.add(new TextArea.LineElement(TextArea.LineElementType.Sub, values));
+                        break;
+                    case Counter:
+                        values = new String[]{((Element) subNode).getAttribute("start"), ((Element) subNode).getAttribute("step"), ((Element) subNode).getAttribute("format")};
+                        lineElements.add(new TextArea.LineElement(TextArea.LineElementType.Counter, values));
+                        break;
+                    case LineContent:
+                        lineElements.add(new TextArea.LineElement(TextArea.LineElementType.LineContent, new String[]{}));
+                        break;
+                }
+            }
+        }
+
+        return new TextArea(lineElements);
     }
 
 

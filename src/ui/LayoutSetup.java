@@ -1,14 +1,11 @@
 package ui;
 
-import org.xml.sax.SAXException;
 import parser.GUIPackage;
 import parser.Parser;
 
 import javax.swing.*;
-import javax.xml.parsers.ParserConfigurationException;
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 
 /**
@@ -25,7 +22,7 @@ public class LayoutSetup {
         jpanel.setLayout(layout);
     }
 
-    public LinkedList<JComponent> bootstrap(File path) throws ParserConfigurationException, SAXException, IOException {
+    public LinkedList<JComponent> bootstrap(File path) throws Exception {
         GUIPackage guiPackage = Parser.parse(path);
         LinkedList<JComponent> components = new LinkedList<>();
         jpanel.removeAll();
@@ -33,6 +30,7 @@ public class LayoutSetup {
 
         for (int i = 0; i < guiPackage.getLines().size(); i++) {
             GUIPackage.Line line = guiPackage.getLines().get(i);
+            builder.setDefault();
             builder.setGridY(i);
             int gridX = 0;
             for (JComponent jComponent : line.getLine()) {
@@ -43,7 +41,7 @@ public class LayoutSetup {
                 } else if (jComponent instanceof JTextField){
                     builder.setWeightX(2);
                 } else if (jComponent instanceof JTextArea){
-                    builder.setWeightX(2);
+                    builder.setWeightX(3);
                     builder.setWeightY(2);
                 }
                 jpanel.add(jComponent,builder.getGridBagConstraints());
@@ -59,12 +57,7 @@ public class LayoutSetup {
 
         GridBagConstraintsBuilder() {
             gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weightx = 0;
-            gbc.weighty = 0;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.insets = new Insets(3,3,3,3);
+            this.setDefault();
         }
 
         GridBagConstraints getGridBagConstraints() {
@@ -98,6 +91,16 @@ public class LayoutSetup {
 
         GridBagConstraintsBuilder setInsets(int top,int left,int bottom,int right){
             gbc.insets = new Insets(top, left, bottom, right);
+            return this;
+        }
+
+        GridBagConstraintsBuilder setDefault() {
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.weightx = 0;
+            gbc.weighty = 0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.insets = new Insets(3, 3, 3, 3);
             return this;
         }
     }

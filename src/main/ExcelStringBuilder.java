@@ -1,21 +1,22 @@
 package main;
 
-import org.xml.sax.SAXException;
 import ui.LayoutSetup;
 
 import javax.swing.*;
-import javax.xml.parsers.ParserConfigurationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
+
+interface ErrorMessageShowListener {
+    void showErrorDialog(String message);
+}
 
 /**
  * Created by Phong on 3/20/2017.
  */
-public class ExcelStringBuilder {
+public class ExcelStringBuilder implements ErrorMessageShowListener {
     private JPanel inputPanel;
     private JPanel resultPanel;
     private JTextArea resultTextarea;
@@ -30,10 +31,6 @@ public class ExcelStringBuilder {
     private LayoutSetup layoutSetup;
     private File[] patterns;
 
-    private void createUIComponents() {
-        inputsPanel = new JPanel();
-    }
-
     public static void main(String[] args) throws Exception {
         JFrame frame = new JFrame("ExcelStringBuilder");
         ExcelStringBuilder excelStringBuilder = new ExcelStringBuilder();
@@ -45,11 +42,18 @@ public class ExcelStringBuilder {
         excelStringBuilder.afterInit();
     }
 
+    private void createUIComponents() {
+        inputsPanel = new JPanel();
+    }
 
-    private void afterInit() throws Exception {
-        initApp();
-        //------------
-        initPatternComboBox();
+    private void afterInit() {
+        try {
+            initApp();
+            //------------
+            initPatternComboBox();
+        } catch (Exception ex) {
+            showErrorDialog(ex.getMessage());
+        }
     }
 
 
@@ -79,12 +83,12 @@ public class ExcelStringBuilder {
                 patternComboBox.addItem(patternFile.getName());
             }
         } else {
-            throw new Exception("Invalid pattern folder");
+            showErrorDialog("Invalid pattern folder");
         }
     }
 
 
-    private void buildInputPanel(File xmlFile) throws IOException, SAXException, ParserConfigurationException {
+    private void buildInputPanel(File xmlFile) throws Exception {
         inputComponents = layoutSetup.bootstrap(xmlFile);
         frame.pack();
         frame.repaint();
@@ -108,7 +112,7 @@ public class ExcelStringBuilder {
                     try {
                         buildInputPanel(pattern);
                     } catch (Exception ex) {
-                        ex.printStackTrace();
+                        this.showErrorDialog(ex.getMessage());
                     }
                 }
             }
@@ -141,5 +145,7 @@ public class ExcelStringBuilder {
         return content;
     }
 
-
+    public void showErrorDialog(String message) {
+        JOptionPane.showMessageDialog(frame, message);
+    }
 }
