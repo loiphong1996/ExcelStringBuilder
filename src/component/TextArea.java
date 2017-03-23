@@ -5,12 +5,14 @@ import org.w3c.dom.Node;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.LinkedList;
 
 /**
  * Created by Phong on 3/22/2017.
  */
-public class TextArea extends JTextArea {
+public class TextArea extends JTextArea implements FocusListener{
     private LinkedList<LineElement> lineStructure;
 
     public TextArea(LinkedList<LineElement> lineStructure) {
@@ -27,7 +29,7 @@ public class TextArea extends JTextArea {
         for (int i = 0; i < lines.length;i++) {
             for (LineElement lineElement : lineStructure) {
                 switch (lineElement.type){
-                    case Sub:
+                    case Label:
                         stringBuilder.append(lineElement.values[0]);
                         break;
                     case Counter:
@@ -50,6 +52,16 @@ public class TextArea extends JTextArea {
         return data.split("\n");
     }
 
+    @Override
+    public void focusGained(FocusEvent e) {
+        this.selectAll();
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+
+    }
+
     public static class LineElement {
         public LineElementType type;
         public String[] values;
@@ -61,14 +73,14 @@ public class TextArea extends JTextArea {
     }
 
     public enum LineElementType {
-        Sub, Counter, LineContent
+        Label, Counter, LineContent
     }
 
     public static LineElementType generateLineElementType(Node node) {
         LineElementType type;
         switch (node.getNodeName()) {
-            case "Sub":
-                type = LineElementType.Sub;
+            case "Label":
+                type = LineElementType.Label;
                 break;
             case "Counter":
                 type = LineElementType.Counter;

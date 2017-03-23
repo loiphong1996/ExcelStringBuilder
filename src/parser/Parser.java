@@ -2,7 +2,8 @@ package parser;
 
 
 import com.sun.corba.se.impl.io.TypeMismatchException;
-import component.BorderedLabel;
+import component.Input;
+import component.Label;
 import component.TextArea;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -88,13 +89,13 @@ public class Parser {
 
     private JComponent parseLabel(Node node) {
         String labelText = node.getTextContent();
-        BorderedLabel jLabel = new BorderedLabel(labelText, SwingConstants.CENTER);
+        Label jLabel = new Label(labelText, SwingConstants.CENTER);
         return jLabel;
     }
 
     private JComponent parseInput(Node node) {
         String defaultValue = node.getTextContent();
-        return new JTextField(defaultValue);
+        return new Input(defaultValue);
     }
 
     private JComponent parseTextArea(Node node) {
@@ -106,9 +107,9 @@ public class Parser {
                 TextArea.LineElementType lineElementType = TextArea.generateLineElementType(subNode);
                 String[] values;
                 switch (lineElementType) {
-                    case Sub:
+                    case Label:
                         values = new String[]{subNode.getTextContent()};
-                        lineElements.add(new TextArea.LineElement(TextArea.LineElementType.Sub, values));
+                        lineElements.add(new TextArea.LineElement(TextArea.LineElementType.Label, values));
                         break;
                     case Counter:
                         values = new String[]{((Element) subNode).getAttribute("start"), ((Element) subNode).getAttribute("step"), ((Element) subNode).getAttribute("format")};
